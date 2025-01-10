@@ -7,5 +7,5 @@ export interface ProductType {
 }
 
 export type ProductFormType = Omit<ProductType, 'id' | 'image'> & {
-  image?: File
+  image?: File | null;
 }

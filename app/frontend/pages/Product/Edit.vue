@@ -2,7 +2,7 @@
   <Head title="Editing product" />
 
   <div className="mx-auto md:w-2/3 w-full px-8 pt-8">
-    <h1 class="font-bold text-4xl">Editing product</h1>
+    <h1 class="font-bold text-4xl">Editing Product</h1>
 
     <Form
       :product="product"
