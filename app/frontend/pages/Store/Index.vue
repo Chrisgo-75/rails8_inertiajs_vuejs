@@ -22,7 +22,7 @@
           <h2 class="font-bold text-lg mb-3">{{ product.title }}</h2>
           <p v-html="product.description"></p>
           <div class="mt-3">
-            {{ product.price }}
+            {{ formatCurrency(product.price) }}
           </div>
         </div>
       </li>
@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { usePage} from "@inertiajs/vue3";
 import { ProductType} from "../Product/types.ts";
+import { formatCurrency} from "../../utils/format.ts";
 
 // Props
 const { products } = defineProps<{

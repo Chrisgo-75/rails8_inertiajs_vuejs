@@ -97,6 +97,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import Product from './Product.vue';
 import { ProductType } from './types';
 import axios from 'axios';
+import { formatCurrency} from "../../utils/format.ts";
 
 // Props
 const { products, flash } = defineProps<{
@@ -108,13 +109,6 @@ const { products, flash } = defineProps<{
 const truncate = (text: string, length: number): string => {
   if (!text) return '';
   return text.length > length ? `${text.substring(0, length)}...` : text;
-};
-
-const formatCurrency = (value: number): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(value);
 };
 
 const destroyProduct = (productId: number): void => {
