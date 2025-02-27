@@ -23,6 +23,13 @@
           <p v-html="product.description"></p>
           <div class="mt-3">
             {{ formatCurrency(product.price) }}
+            <!-- Add to Cart Button -->
+            <button
+              @click="addToCart(product.id)"
+              class="ml-4 rounded-lg py-1 px-2 text-white bg-green-600"
+              >
+              Add to Cart
+            </button>
           </div>
         </div>
       </li>
@@ -34,6 +41,12 @@
 import { usePage} from "@inertiajs/vue3";
 import { ProductType} from "../Product/types.ts";
 import { formatCurrency} from "../../utils/format.ts";
+import { ref } from 'vue';
+import axios from "axios";
+import { router } from '@inertiajs/vue3';
+
+// Get CSRF token from meta tag
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 // Props
 const { products } = defineProps<{
@@ -45,4 +58,25 @@ const { products } = defineProps<{
 
 // Access Inertia.js page props
 const page = usePage();
+
+// Methods
+const addToCart = async (productId: number) => {
+  try {
+    const response = await axios.post('/line_items',
+        { product_id: productId },
+        { headers: { 'X-CSRF-Token': csrfToken } } // Include CSRF token
+    );
+
+    alert('Product added to cart!');
+
+    // Extract the cart ID from the response.
+    const cartId = response.data.cart_id;
+
+    router.visit(`/carts/${cartId}`);
+  } catch (error) {
+    console.error('Error adding to cart: ', error);
+    alert('Failed to add product to cart.');
+  }
+};
+
 </script>
