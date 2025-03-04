@@ -42,7 +42,7 @@ import { usePage} from "@inertiajs/vue3";
 import { ProductType} from "../Product/types.ts";
 import { formatCurrency} from "../../utils/format.ts";
 import { ref } from 'vue';
-import axios from "axios";
+// import axios from "axios";
 import { router } from '@inertiajs/vue3';
 
 // Get CSRF token from meta tag
@@ -60,19 +60,18 @@ const { products } = defineProps<{
 const page = usePage();
 
 // Methods
-const addToCart = async (productId: number) => {
+const addToCart = (productId: number) => {
   try {
-    const response = await axios.post('/line_items',
-        { product_id: productId },
-        { headers: { 'X-CSRF-Token': csrfToken } } // Include CSRF token
-    );
+    router.visit('/line_items', {
+      method: 'POST',
+      data: { product_id: productId },
+    });
+    // const response = await axios.post('/line_items',
+    //     { product_id: productId },
+    //     { headers: { 'X-CSRF-Token': csrfToken } } // Include CSRF token
+    // );
 
     alert('Product added to cart!');
-
-    // Extract the cart ID from the response.
-    const cartId = response.data.cart_id;
-
-    router.visit(`/carts/${cartId}`);
   } catch (error) {
     console.error('Error adding to cart: ', error);
     alert('Failed to add product to cart.');

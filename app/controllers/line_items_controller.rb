@@ -43,15 +43,9 @@ class LineItemsController < ApplicationController
     @line_item = @cart.line_items.build(product: product)
 
     if @line_item.save
-      # redirect_to @line_item.cart, notice: "Line item was successfully created."
-      # redirect_to @cart, notice: "Cart was successfully updated."
-      # redirect_to inertia: cart_path(@cart), notice: "Cart was successfully updated."
-      render json: { cart_id: @cart.id }
+      redirect_to @line_item.cart, notice: "Line item was successfully created."
     else
-      # redirect_to new_line_item_url, inertia: { errors: @line_item.errors }
-      # render inertia: "Carts/Show", props: { cart: @cart, errors: @line_item.errors }
-      render json: { errors: @line_item.errors.full_messages },
-             status: :unprocessable_entity
+      redirect_to new_line_item_url, inertia: { errors: @line_item.errors }
     end
   end # END def create
 
