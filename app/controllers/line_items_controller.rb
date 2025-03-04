@@ -43,9 +43,17 @@ class LineItemsController < ApplicationController
     @line_item = @cart.line_items.build(product: product)
 
     if @line_item.save
-      redirect_to @line_item.cart, notice: "Line item was successfully created."
+      # redirect_to @line_item.cart, notice: "Line item was successfully created."
+      @cart = Cart.includes(line_items: :product).find(@line_item.cart_id)
+      render inertia: 'Cart/Show', props: {
+        cart: @cart.as_json(include: { line_items: { include: :product } }),
+        flash: { notice: "Line Item was successfully created." }
+      }
     else
-      redirect_to new_line_item_url, inertia: { errors: @line_item.errors }
+      # redirect_to new_line_item_url, inertia: { errors: @line_item.errors }
+      render inertia: 'LineItem/New', props: {
+        errors: @line_item.errors
+      }
     end
   end # END def create
 
