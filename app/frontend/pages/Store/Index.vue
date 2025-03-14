@@ -1,13 +1,5 @@
 <template>
   <div class="w-full">
-    <!-- Flash Notice -->
-    <p
-        v-if="page.props.flash?.notice"
-        class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block"
-    >
-      {{ page.props.flash.notice }}
-    </p>
-
     <!-- Page Title -->
     <div>
       <h1 class="font-bold text-xl mb-6 pb-2 border-b-2">
@@ -39,11 +31,17 @@
 
 <script setup lang="ts">
 import { usePage} from "@inertiajs/vue3";
+import { defineOptions } from 'vue';
+import Layout from '../../Layouts/Main.vue';
 import { ProductType} from "../Product/types.ts";
 import { formatCurrency} from "../../utils/format.ts";
 import { ref } from 'vue';
 // import axios from "axios";
 import { router } from '@inertiajs/vue3';
+
+defineOptions({
+  layout: Layout
+})
 
 // Get CSRF token from meta tag
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -77,5 +75,4 @@ const addToCart = (productId: number) => {
     alert('Failed to add product to cart.');
   }
 };
-
 </script>

@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: %i[ show edit update destroy ]
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
   inertia_share flash: -> { flash.to_hash }
 
@@ -62,6 +63,13 @@ class CartsController < ApplicationController
   end
 
   private
+  def invalid_cart
+    Rails.logger.error("Attempt to access invalid cart #{params[:id]}")
+
+    flash[:alert] = "Invalid cart"
+    redirect_to store_index_url
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
       @cart = Cart.find(params[:id])

@@ -4,4 +4,7 @@ class ApplicationController < ActionController::Base
 
   include(ActiveStorage::SetCurrent)
 
+  inertia_share flash: -> { flash.to_hash }
+
+
 end # END class
