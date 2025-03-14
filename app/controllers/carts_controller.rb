@@ -58,8 +58,11 @@ class CartsController < ApplicationController
 
   # DELETE /carts/1
   def destroy
-    @cart.destroy!
-    redirect_to carts_url, notice: "Cart was successfully destroyed."
+    @cart.destroy! if @cart.id == session[:cart_id]
+    session[:cart_id] = nil
+
+    flash[:notice] = "Your cart is currently empty."
+    redirect_to store_index_path
   end
 
   private
