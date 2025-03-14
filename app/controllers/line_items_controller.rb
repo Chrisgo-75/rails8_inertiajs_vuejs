@@ -40,8 +40,8 @@ class LineItemsController < ApplicationController
   # POST /line_items
   def create
     product = Product.find(params[:product_id])
-    @line_item = @cart.line_items.build(product: product)
-
+    @line_item = @cart.add_product(product)
+    Rails.logger.info('******* @line_item: '+@line_item.inspect)
     if @line_item.save
       # redirect_to @line_item.cart, notice: "Line item was successfully created."
       @cart = Cart.includes(line_items: :product).find(@line_item.cart_id)

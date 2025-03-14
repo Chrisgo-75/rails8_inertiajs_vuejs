@@ -1,9 +1,9 @@
 <template>
   <div>
     <h2 class="font-bold text-lg mb-3">Your Pragmatic Cart</h2>
-    <ul class="list-disc list-inside">
+    <ul class="list-none list-inside">
       <li v-for="item in cart.line_items" :key="item.id">
-        {{ item.product.title }}
+        {{ item.quantity }} &times; {{ item.product.title }}
       </li>
     </ul>
   </div>
