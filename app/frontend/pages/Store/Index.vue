@@ -41,7 +41,7 @@ import { router } from '@inertiajs/vue3';
 
 defineOptions({
   layout: Layout
-})
+});
 
 // Get CSRF token from meta tag
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');

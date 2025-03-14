@@ -2,13 +2,6 @@
   <Head title="Carts" />
 
   <div className="mx-auto md:w-2/3 w-full px-8 pt-8">
-    <p
-      v-if="flash.notice"
-      class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block"
-    >
-      {{ flash.notice }}
-    </p>
-
     <div class="flex justify-between items-center">
       <h1 class="font-bold text-4xl">Carts</h1>
       <Link
@@ -36,9 +29,15 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3'
-import Cart from './Cart.vue'
-import { CartType } from './types'
+import { Head, Link } from '@inertiajs/vue3';
+import { defineOptions } from 'vue';
+import Cart from './Cart.vue';
+import { CartType } from './types';
+import Layout from "../../Layouts/Main.vue";
+
+defineOptions({
+  layout: Layout
+});
 
 const { carts, flash } = defineProps<{
   carts: CartType[]
